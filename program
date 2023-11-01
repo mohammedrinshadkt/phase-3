@@ -1,0 +1,52 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from mlxtend.frequent_patterns import apriori
+from mlxtend.frequent_patterns import association_rules
+sns.set(style="darkgrid", color_codes=True)
+pd.set_option('display.max_columns', 75)
+import pandas as pd
+df = pd.read_excel('/kaggle/input/market-basket-analysis/Assignment-1_Data.xlsx', header = None)
+df.info()
+df.head()
+df.describe()
+color = plt.cm.rainbow(np.linspace(0, 1, 40))
+df[0].value_counts().head(40).plot.bar(color = color, figsize=(13,5))
+plt.title('frequency of most popular items', fontsize = 20)
+plt.xticks(rotation = 90 )
+plt.grid()
+plt.show()
+import networkx as nx
+df['food'] = 'Food'
+food = df.truncate(before = -1, after = 15)
+food = nx.from_pandas_edgelist(food, source = 'food', target = 0, edge_attr = True)
+import matplotlib. pyplot as plt
+import numpy as np
+import warnings
+warnings.filterwarnings('ignore')
+
+plt.rcParams['figure.figsize'] = (13, 13)
+pos = nx.spring_layout(food)
+color = plt.cm.Set1(np.linspace(0, 15, 1))
+nx.draw_networkx_nodes(food, pos, node_size = 15000, node_color = color)
+nx.draw_networkx_edges(food, pos, width = 3, alpha = 0.6, edge_color = 'black')
+nx.draw_networkx_labels(food, pos, font_size = 20, font_family = 'sans-serif')
+plt.axis('off')
+plt.grid()
+plt.title('Top 15 First Choices', fontsize = 20)
+plt.show()
+transactions[:1]
+from itertools import permutations
+
+# Extract unique items.
+flattened = [item for transaction in transactions for item in transaction]
+items = list(set(flattened))
+print('# of items:',len(items))
+print(list(items))
+if 'nan' in items: items.remove('nan')
+print(list(items))
+# Compute and print rules.
+rules = list(permutations(items, 2))
+print('# of rules:',len(rules))
+print(rules[:5])
